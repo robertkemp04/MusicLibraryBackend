@@ -1,6 +1,4 @@
-﻿using Microsoft.Identity.Client;
-
-namespace MusicLibraryWebAPI.Models
+﻿namespace MusicLibraryWebAPI.Models
 {
     public class Music
     {
@@ -9,7 +7,6 @@ namespace MusicLibraryWebAPI.Models
         public string Artist { get; set; }
         public string Album { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public string genre { get; set; }
-
+        public string Genre { get; set; }
     }
 }

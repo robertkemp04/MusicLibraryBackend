@@ -19,10 +19,11 @@ namespace MusicLibraryWebAPI
 
             var connectionString = builder.Configuration.GetConnectionString
                 ("DefaultConnection") ?? throw new InvalidOperationException
-                ("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDBContext>(options =>
-                options.UseMySQL(connectionString, b => b.MigrationsAssembly(typeof
-                (ApplicationDBContext).Assembly.FullName)));
+                ("Connection string 'DefaultConnection' not found");
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseMySQL(connectionString, b => b.MigrationsAssembly(typeof
+            (ApplicationDbContext).Assembly.FullName)));
+
 
             var app = builder.Build();
 
