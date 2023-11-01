@@ -11,20 +11,20 @@ namespace MusicLibraryWebAPI.Controllers
     [ApiController]
     public class MusicsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext db;
 
         public MusicsController(ApplicationDbContext context)
         {
-            _context = context;
+            db = context;
         }
 
         // GET: api/<MusicsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            var musics = _context.Musics.ToList();
+            var musics = db.Musics.ToList();
            
-            return new string[] { "value1", "value2" };
+            return Ok(musics);
         }
 
         // GET api/<MusicsController>/5
@@ -39,8 +39,8 @@ namespace MusicLibraryWebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Music music)
         {
-            _context.Musics.Add(music);
-            _context.SaveChanges();
+            db.Musics.Add(music);
+            db.SaveChanges();
             return StatusCode(201, music);
         }
 
@@ -48,8 +48,8 @@ namespace MusicLibraryWebAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Music music)
         {
-            _context.Musics.Update(music);
-            _context.SaveChanges();
+            db.Musics.Update(music);
+            db.SaveChanges();
             return StatusCode(200, music);
         }
 
