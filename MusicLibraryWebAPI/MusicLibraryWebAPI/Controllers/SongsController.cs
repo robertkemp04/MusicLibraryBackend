@@ -9,11 +9,11 @@ namespace MusicLibraryWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MusicsController : ControllerBase
+    public class SongsController : ControllerBase
     {
         private readonly ApplicationDbContext db;
 
-        public MusicsController(ApplicationDbContext context)
+        public SongsController(ApplicationDbContext context)
         {
             db = context;
         }
@@ -22,35 +22,43 @@ namespace MusicLibraryWebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var musics = db.Musics.ToList();
+            var songs = db.Musics.ToList();
            
-            return Ok(musics);
+            return Ok(songs);
         }
 
         // GET api/<MusicsController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
+            var selectId = db.Musics.Find(id);
 
             return "value";
         }
 
         // POST api/<MusicsController>
         [HttpPost]
-        public IActionResult Post([FromBody] Music music)
+        public IActionResult Post([FromBody] Song songAdd)
         {
-            db.Musics.Add(music);
+            db.Musics.Add(songAdd);
             db.SaveChanges();
-            return StatusCode(201, music);
+            return StatusCode(201, songAdd);
         }
 
         // PUT api/<MusicsController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Music music)
+        public IActionResult Put(int id, [FromBody] Song songData)
         {
-            db.Musics.Update(music);
+           var song = db.Musics.Find(id);
+            song.Title = songData.Title;
+            song.Artist = songData.Artist;
+            song.Album = songData.Album;
+            song.ReleaseDate = songData.ReleaseDate;
+            song.Genre = songData.Genre;
+
             db.SaveChanges();
-            return StatusCode(200, music);
+
+            return Ok(song);
         }
 
         // DELETE api/<MusicsController>/5
