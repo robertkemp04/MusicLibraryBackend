@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf.Collections;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MusicLibraryWebAPI.Data;
 using MusicLibraryWebAPI.Models;
 
@@ -31,9 +32,11 @@ namespace MusicLibraryWebAPI.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            var selectId = db.Musics.Find(id);
+            var song = db.Musics.Find(id);
+            db.Musics.ToList();
 
-            return "value";
+            return Ok(song);
+
         }
 
         // POST api/<MusicsController>
@@ -65,6 +68,9 @@ namespace MusicLibraryWebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            var song = db.Musics.Find(id);
+            db.Musics.ExecuteDelete();
+            db.SaveChanges();
             return NoContent();
         }
     }
